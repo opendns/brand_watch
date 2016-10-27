@@ -54,8 +54,11 @@ class Watcher:
                 for result in results['matches']:
                     name = result['name']
                     if self.exclude is not None:
-                        if name not in self.exclude:
-                            print name
+                        # Check for any explicit matches
+                        if name not in self.exclude: 
+                            # Check for more full host matches
+                            if all([not name.endswith('.{}'.format(e)) for e in self.exclude]):
+                                print name
                     else:
                         print name
 
